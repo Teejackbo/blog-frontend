@@ -1,17 +1,19 @@
 // @flow
-import { SET_API_KEY } from '../actions/types'
+import { SET_API_KEY, SET_LOGGING_IN } from '../actions/types'
 import type { APIAction } from '../actions/apiActions'
 
 type State = {
-  apiKey: string,
-  apiURL: string,
-  loggedIn: boolean
+  +apiKey: string,
+  +apiURL: string,
+  +loggedIn: boolean,
+  +loggingIn: boolean
 }
 
 const initialState = {
   apiKey: '',
   apiURL: '//localhost:3333/api',
-  loggedIn: false
+  loggedIn: false,
+  loggingIn: false
 }
 
 export default function (state: State = initialState, action: APIAction): State {
@@ -20,7 +22,13 @@ export default function (state: State = initialState, action: APIAction): State 
       return {
         ...state,
         apiKey: action.apiKey,
-        loggedIn: true
+        loggedIn: true,
+        loggingIn: false
+      }
+    case SET_LOGGING_IN:
+      return {
+        ...state,
+        loggingIn: action.loggingIn
       }
     default:
       return state

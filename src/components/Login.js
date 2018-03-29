@@ -4,7 +4,7 @@ import type { Element } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import type { Store } from 'redux'
-import { setApiKey } from '../redux/actions/apiActions'
+import { setApiKey, setLoggingIn } from '../redux/actions/apiActions'
 
 type State = {
   username: string,
@@ -14,7 +14,8 @@ type State = {
 
 type Props = {
   apiURL: string,
-  setApiKey: (token: string) => mixed
+  setApiKey: (token: string) => mixed,
+  setLoggingIn: (loggingIn: boolean) => mixed
 }
 
 export class Login extends Component<Props, State> {
@@ -36,6 +37,7 @@ export class Login extends Component<Props, State> {
 
   onSubmit = async (e: SyntheticEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
+    this.props.setLoggingIn(true)
     try {
       const res = await axios.post(`${this.props.apiURL}/authenticate`, {
         username: this.state.username,
@@ -44,6 +46,7 @@ export class Login extends Component<Props, State> {
       this.props.setApiKey(res.data.token)
     } catch (e) {
       this.setState({ error: e.response.status })
+      this.props.setLoggingIn(false)
     }
   }
 
@@ -72,4 +75,4 @@ const mapStateToProps = (state: Store): { apiURL: string } => ({
   apiURL: state.api.apiURL
 })
 
-export default connect(mapStateToProps, { setApiKey })(Login)
+export default connect(mapStateToProps, { setApiKey, setLoggingIn })(Login)
