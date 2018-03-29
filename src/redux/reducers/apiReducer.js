@@ -10,7 +10,7 @@ type State = {
 
 const initialState = {
   apiKey: '',
-  apiURL: 'localhost:3333/api/',
+  apiURL: '//localhost:3333/api',
   loggedIn: false
 }
 
