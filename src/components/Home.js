@@ -1,10 +1,11 @@
 // @flow
-import React from 'react'
-import type { Element } from 'react'
+import React, { Fragment } from 'react'
 
-const Home = (): Element<'h1'> => {
+const Home = (): Fragment => {
   return (
-    <h1>Home</h1>
+    <Fragment>
+      <h1>Home</h1>
+    </Fragment>
   )
 }
 

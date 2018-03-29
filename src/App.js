@@ -1,13 +1,17 @@
 // @flow
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import store from './redux/store'
 import Home from './components/Home'
 
-const App = (): typeof Switch => {
+const App = (): Provider => {
   return (
-    <Switch>
-      <Route exact path="/" component={Home} />
-    </Switch>
+    <Provider store={store}>
+      <Switch>
+        <Route exact path="/" component={Home} />
+      </Switch>
+    </Provider>
   )
 }
 

@@ -35,7 +35,7 @@
         ],
         "flowtype/require-valid-file-annotation": 2,
         "flowtype/semi": [
-            2,
+            0,
             "always"
         ],
         "flowtype/space-after-type-colon": [
@@ -51,8 +51,8 @@
             "never"
         ],
         "flowtype/type-id-match": [
-            2,
-            "^([A-Z][a-z0-9]+)+Type$"
+            0,
+            "^([A-Z][a-z0-9]+)$"
         ],
         "flowtype/union-intersection-spacing": [
             2,
