@@ -4,12 +4,14 @@ import type { APIAction } from '../actions/apiActions'
 
 type State = {
   apiKey: string,
-  apiURL: string
+  apiURL: string,
+  loggedIn: boolean
 }
 
 const initialState = {
   apiKey: '',
-  apiURL: 'localhost:3333/api/'
+  apiURL: 'localhost:3333/api/',
+  loggedIn: false
 }
 
 export default function (state: State = initialState, action: APIAction): State {
@@ -17,7 +19,8 @@ export default function (state: State = initialState, action: APIAction): State 
     case SET_API_KEY:
       return {
         ...state,
-        apiKey: action.apiKey
+        apiKey: action.apiKey,
+        loggedIn: true
       }
     default:
       return state

@@ -1,12 +1,23 @@
 // @flow
-import React, { Fragment } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
+import type { Element } from 'react'
+import type { Store } from 'redux'
+import Login from './Login'
 
-const Home = (): Fragment => {
-  return (
-    <Fragment>
-      <h1>Home</h1>
-    </Fragment>
-  )
+type Props = {
+  loggedIn: boolean
 }
 
-export default Home
+const Home = ({ loggedIn }: Props): Element<'h1'> => {
+  if (loggedIn) {
+    return <h1>Hello World</h1>
+  }
+  return <Login />
+}
+
+const mapStateToProps = (state: Store): Props => ({
+  loggedIn: state.api.loggedIn
+})
+
+export default connect(mapStateToProps, null)(Home)
