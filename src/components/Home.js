@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import type { Element } from 'react'
 import type { Store } from 'redux'
 import Login from './Login'
+import Spinner from './Spinner'
 
 type Props = {
   loggedIn: boolean,
@@ -15,7 +16,7 @@ const Home = ({ loggedIn, loggingIn }: Props): Element<'h1'> | typeof Login => {
     return <h1>Hello World</h1>
   }
   if (loggingIn) {
-    return <h1>Spinner</h1>
+    return <Spinner />
   }
   return <Login />
 }

@@ -1,5 +1,6 @@
 [ignore]
 node_modules
+gulpfile.js
 [include]
 
 [libs]
