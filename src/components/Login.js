@@ -4,27 +4,29 @@ import type { Element } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import type { Store } from 'redux'
-import { setApiKey, setLoggingIn } from '../redux/actions/apiActions'
+import { setApiKey } from '../redux/actions/apiActions'
+import Spinner from './Spinner'
 
 type State = {
   username: string,
   password: string,
-  error: number
+  error: number,
+  loggingIn: boolean
 }
 
 type Props = {
   apiURL: string,
-  setApiKey: (token: string) => mixed,
-  setLoggingIn: (loggingIn: boolean) => mixed
+  setApiKey: (token: string) => mixed
 }
 
 export class Login extends Component<Props, State> {
-  constructor () {
-    super()
+  constructor (props: Props) {
+    super(props)
     this.state = {
       username: '',
       password: '',
-      error: 0
+      error: 0,
+      loggingIn: false
     }
   }
 
@@ -37,7 +39,7 @@ export class Login extends Component<Props, State> {
 
   onSubmit = async (e: SyntheticEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
-    this.props.setLoggingIn(true)
+    this.setState({ loggingIn: true })
     try {
       const res = await axios.post(`${this.props.apiURL}/authenticate`, {
         username: this.state.username,
@@ -46,8 +48,8 @@ export class Login extends Component<Props, State> {
       this.props.setApiKey(res.data.token)
     } catch (e) {
       this.setState({ error: e.response.status })
-      this.props.setLoggingIn(false)
     }
+    this.setState({ loggingIn: false })
   }
 
   checkErrors = (): Element<'h2'> | void => {
@@ -57,6 +59,9 @@ export class Login extends Component<Props, State> {
   }
 
   render (): Fragment {
+    if (this.state.loggingIn) {
+      return <Spinner />
+    }
     return (
       <Fragment>
         <h1>Login</h1>
@@ -75,4 +80,4 @@ const mapStateToProps = (state: Store): { apiURL: string } => ({
   apiURL: state.api.apiURL
 })
 
-export default connect(mapStateToProps, { setApiKey, setLoggingIn })(Login)
+export default connect(mapStateToProps, { setApiKey })(Login)
